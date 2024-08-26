@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 
-export type Depth2Frame1Type = {
-  className?: string;
-};
-
-const Depth2Frame1: NextPage<Depth2Frame1Type> = ({ className = "" }) => {
+const Footer = () => {
   return (
     <footer
-      className={`self-stretch flex flex-row items-start justify-center py-0 px-5 box-border max-w-full text-center text-base text-steelblue font-plus-jakarta-sans ${className}`}
+      className={
+        "  bg-custom-dark-blue border-gainsboro border-b-[1px] border-solid  self-stretch flex flex-row items-start justify-center py-0 px-5 box-border max-w-full text-center text-base text-steelblue font-plus-jakarta-sans "
+      }
     >
       <div className="w-[960px] flex flex-col items-start justify-start max-w-[960px] mq1100:max-w-full">
         <div className="self-stretch flex flex-col items-start justify-start py-10 px-5 gap-6">
@@ -42,7 +40,7 @@ const Depth2Frame1: NextPage<Depth2Frame1Type> = ({ className = "" }) => {
                     className="absolute top-[0px] left-[0px] w-full h-full"
                     loading="lazy"
                     alt=""
-                    src="/face.svg"
+                    src="/footer/face.svg"
                   />
                   <div className="absolute top-[0px] left-[0px] w-5 h-5" />
                 </div>
@@ -55,7 +53,7 @@ const Depth2Frame1: NextPage<Depth2Frame1Type> = ({ className = "" }) => {
                     className="absolute top-[0px] left-[0px] w-full h-full"
                     loading="lazy"
                     alt=""
-                    src="/insta.svg"
+                    src="/footer/insta.svg"
                   />
                   <div className="absolute top-[0px] left-[0px] w-5 h-[18px]" />
                 </div>
@@ -68,7 +66,7 @@ const Depth2Frame1: NextPage<Depth2Frame1Type> = ({ className = "" }) => {
                     className="absolute top-[0px] left-[0px] w-full h-full"
                     loading="lazy"
                     alt=""
-                    src="/twit.svg"
+                    src="/footer/twit.svg"
                   />
                   <div className="absolute top-[0px] left-[0px] w-5 h-5" />
                 </div>
@@ -81,7 +79,7 @@ const Depth2Frame1: NextPage<Depth2Frame1Type> = ({ className = "" }) => {
                     className="absolute top-[0px] left-[0px] w-full h-full"
                     loading="lazy"
                     alt=""
-                    src="/tele.svg"
+                    src="/footer/tele.svg"
                   />
                   <div className="absolute top-[0px] left-[0px] w-[19px] h-[21px]" />
                 </div>
@@ -94,4 +92,4 @@ const Depth2Frame1: NextPage<Depth2Frame1Type> = ({ className = "" }) => {
   );
 };
 
-export default Depth2Frame1;
+export default Footer;

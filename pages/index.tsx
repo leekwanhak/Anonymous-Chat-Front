@@ -1,118 +1,113 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import type { NextPage } from "next";
 
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/router";
 
-export default function Home() {
+import { useEffect, useContext } from "react";
+
+//전역컨텍스트 참조하기
+import { GlobalContext } from "@/library/globalContext";
+
+const Home = () => {
+  const router = useRouter();
+
+  //전역 상태값에서 로그인한 사용자의 정보 조회하기 위해 컨텍스트 객체 생성
+  const { globalData, setGlobalData } = useContext(GlobalContext);
+
+  useEffect(() => {
+    console.log("전역 데이터 정보 확인하기:", globalData);
+  }, []);
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div className="w-full relative bg-custom-dark-blue flex-col items-start justify-start leading-[normal] tracking-[normal]">
+      <main
+        className={
+          "self-stretch  border-black border-[1px] border-solid box-border flex flex-col items-start justify-start min-h-[800px] max-w-full"
+        }
+      >
+        <section className="self-stretch flex flex-col items-start justify-start max-w-full text-left text-base text-white font-plus-jakarta-sans">
+          <div className="self-stretch flex flex-row items-start justify-center py-5 px-40 box-border max-w-full mq450:pl-5 mq450:pr-5 mq450:box-border mq750:pl-20 mq750:pr-20 mq750:box-border">
+            <div className="flex-1 overflow-hidden flex flex-col items-start justify-start pt-0 px-0 pb-[94px] box-border max-w-[960px] mq1100:max-w-full mq750:pb-[61px] mq750:box-border">
+              {/* today matches영역 */}
+              <div className="self-stretch flex flex-row flex-wrap items-start justify-start py-4 pl-4 pr-[654px] gap-3 text-17xl mq1100:pr-[327px] mq1100:box-border mq750:pr-[163px] mq750:box-border">
+                <div className="flex flex-col items-start justify-start min-w-[288px]">
+                  <h1 className="m-0 relative text-inherit tracking-[-1px] leading-[45px] font-extrabold font-[inherit] mq450:text-3xl mq450:leading-[27px] mq750:text-10xl mq750:leading-[36px]">
+                    Todays matches
+                  </h1>
+                </div>
+              </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+              {/* start matching 영역 */}
+              <div className="self-stretch flex flex-col items-start justify-start p-4">
+                <div className="self-stretch rounded-xl bg-custom-dark-blue border-darkslateblue border-[1px] border-solid flex flex-row items-center justify-between py-[19px] px-[21px] gap-5 mq750:flex-wrap">
+                  <div className="w-[314px] flex flex-col items-start justify-start gap-1">
+                    <div className="self-stretch flex flex-col items-start justify-start">
+                      <b className="self-stretch relative leading-[20px]">
+                        Start matching
+                      </b>
+                    </div>
+                    <div className="flex flex-col items-start justify-start text-steelblue">
+                      <div className="relative leading-[24px]">
+                        Get matched with students at your school
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      router.push("/match");
+                    }}
+                    className="cursor-pointer [border:none] py-[5.5px] px-4 bg-indigo-600 hover:bg-indigo-500 w-[131px] rounded-2xl overflow-hidden shrink-0 flex flex-row items-center justify-center box-border min-w-[84px] max-w-[480px] mq750:max-w-full"
+                  >
+                    <div className="flex-1 overflow-hidden flex flex-col items-center justify-start">
+                      <div className="self-stretch relative text-sm leading-[21px] font-medium font-plus-jakarta-sans  text-white text-center overflow-hidden text-ellipsis whitespace-nowrap">
+                        Start matching
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+              {/* matches remaining today 영역 - 남은 횟수 전달 필요*/}
+              <div className="self-stretch flex flex-col items-start justify-start pt-4 px-4 pb-2 text-lg">
+                <b className="self-stretch relative leading-[23px]">
+                  You have 5 matches remaining today
+                </b>
+              </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+              {/* find your people 영역 */}
+              <div className="self-stretch flex flex-col items-start justify-start p-4 box-border max-w-full">
+                <div className="self-stretch rounded-xl flex flex-row items-start justify-between [row-gap:20px] max-w-full gap-0 mq1100:flex-wrap mq450:flex-wrap mq750:flex-wrap mq1275:flex-wrap">
+                  <div className="w-[608px] flex flex-col items-start justify-start pt-0 px-0 pb-[42px] box-border gap-1 min-w-[608px] max-w-full mq1100:flex-1 mq1100:min-w-full mq450:flex-1 mq750:flex-1 mq1275:flex-1">
+                    <div className="self-stretch flex flex-col items-start justify-start">
+                      <b className="self-stretch relative leading-[20px]">
+                        Find your people
+                      </b>
+                    </div>
+                    <div className="self-stretch flex flex-col items-start justify-start text-sm text-steelblue">
+                      <div className="self-stretch relative leading-[21px]">
+                        We are building a safe space for college students to
+                        meet and date. We use a mixture of human and AI
+                        moderation to help keep our community safe. We also have
+                        some features designed to help you meet new people, such
+                        as the ability to send a message to someone before
+                        matching with them. This is part of our mission to help
+                        you find your people. We hope you enjoy using Midnight.
+                      </div>
+                    </div>
+                  </div>
+                  <img
+                    className="h-[171px] w-[318px] relative rounded-xl overflow-hidden shrink-0 object-cover mq1100:flex-1 mq450:flex-1 mq750:flex-1 mq1275:flex-1"
+                    loading="lazy"
+                    alt=""
+                    src="/home/twopeople.svg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
-}
+};
+
+export default Home;

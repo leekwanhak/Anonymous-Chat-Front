@@ -15,7 +15,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
 export default config;
 
@@ -38,7 +38,9 @@ module.exports = {
         darkslateblue: "#333366",
         mediumblue: "#1a1ae6",
         gainsboro: "#e6e8eb",
+        "custom-dark-blue": "#121221",
       },
+
       spacing: {},
       fontFamily: {
         "plus-jakarta-sans": "'Plus Jakarta Sans'",
@@ -69,46 +71,6 @@ module.exports = {
       mq450: {
         raw: "screen and (max-width: 450px)",
       },
-    },
-  },
-  corePlugins: {
-    preflight: false,
-  },
-};
-
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        white: "#fff",
-        gray: {
-          "100": "#242447",
-          "200": "#121",
-        },
-        mediumblue: "#1a1ae6",
-        steelblue: "#9494c7",
-        gainsboro: "#e6e8eb",
-      },
-      spacing: {},
-      fontFamily: {
-        "plus-jakarta-sans": "'Plus Jakarta Sans'",
-      },
-      borderRadius: {
-        xl: "20px",
-      },
-    },
-    fontSize: {
-      sm: "14px",
-      base: "16px",
-      lg: "18px",
-      inherit: "inherit",
-    },
-    screens: {
       mq975: {
         raw: "screen and (max-width: 975px)",
       },
@@ -117,9 +79,6 @@ module.exports = {
       },
       mq700: {
         raw: "screen and (max-width: 700px)",
-      },
-      mq450: {
-        raw: "screen and (max-width: 450px)",
       },
     },
   },

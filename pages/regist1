@@ -1,0 +1,75 @@
+import { useState } from "react";
+
+const departments = {
+  Engineering: [
+    "Computer Science",
+    "Mechanical Engineering",
+    "Electrical Engineering",
+  ],
+  Arts: ["Visual Arts", "Music", "Theatre"],
+  Science: ["Physics", "Chemistry", "Biology"],
+};
+
+export default function DepartmentSelector() {
+  const [selectedFaculty, setSelectedFaculty] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+
+  const handleFacultyChange = (e) => {
+    setSelectedFaculty(e.target.value);
+    setSelectedDepartment(""); // Reset department selection
+  };
+
+  const handleDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value);
+  };
+
+  return (
+    <div className="flex flex-col items-center mt-10">
+      <div className="mb-4">
+        <label
+          htmlFor="faculty"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Select Faculty
+        </label>
+        <select
+          id="faculty"
+          value={selectedFaculty}
+          onChange={handleFacultyChange}
+          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        >
+          <option value="">Select Faculty</option>
+          {Object.keys(departments).map((faculty) => (
+            <option key={faculty} value={faculty}>
+              {faculty}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {selectedFaculty && (
+        <div>
+          <label
+            htmlFor="department"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Select Department
+          </label>
+          <select
+            id="department"
+            value={selectedDepartment}
+            onChange={handleDepartmentChange}
+            className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="">Select Department</option>
+            {departments[selectedFaculty].map((department) => (
+              <option key={department} value={department}>
+                {department}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
+}

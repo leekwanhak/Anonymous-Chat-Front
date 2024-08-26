@@ -1,0 +1,174 @@
+
+<head태그 위에 로고>
+
+import Head from "next/head";
+import ChatLayout from "@/pages/chat/chatboxcomponent";
+
+export default function Home() {
+  return (
+    <>
+      {/* <Head>
+        <title>Galileo Design</title>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link
+          rel="stylesheet"
+          as="style"
+          onLoad="this.rel='stylesheet'"
+          href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800"
+        />
+        <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+      </Head> */}
+      <ChatLayout />
+    </>
+  );
+}
+
+
+
+
+<timer>
+
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+
+const ChatPage = () => {
+  const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds:) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(
+      remainingSeconds
+    ).padStart(2, "0")}`;
+  };
+
+  return (
+    <Container>
+      <Header>
+        <h1>Campus Connect</h1>
+        <EndChatButton>End Chat</EndChatButton>
+      </Header>
+      <MainContent>
+        <Timer>{formatTime(timeLeft)}</Timer>
+        <ChatBox>
+          <Message>
+            <Avatar src="/user-avatar.png" alt="User Avatar" />
+            <MessageContent>Hey, how's it going?</MessageContent>
+          </Message>
+          <InputArea>
+            <Input placeholder="Say something nice..." />
+            <SendButton>Send</SendButton>
+          </InputArea>
+        </ChatBox>
+      </MainContent>
+    </Container>
+  );
+};
+
+export default ChatPage;
+
+// Styled-components
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  height: 100vh;
+  padding: 20px;
+`;
+
+const Header = styled.header`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const EndChatButton = styled.button`
+  background-color: #405cf5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+const MainContent = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+`;
+
+const Timer = styled.div`
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #405cf5;
+`;
+
+const ChatBox = styled.div`
+  width: 100%;
+  background-color: #252546;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+`;
+
+const Message = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const MessageContent = styled.div`
+  background-color: #3b3b58;
+  padding: 10px;
+  border-radius: 5px;
+  color: #ffffff;
+`;
+
+const InputArea = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+  background-color: #3b3b58;
+  color: #ffffff;
+`;
+
+const SendButton = styled.button`
+  background-color: #405cf5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+`;

@@ -1,17 +1,57 @@
-import type { NextPage } from "next";
-import Depth4Frame from "@/pages/match/content";
+// import type { NextPage } from "next";
+import MatchPartner from "@/pages/match/content";
 
-export type GalileoDesignType = {
-  className?: string;
-};
+import { useEffect, useState } from "react";
 
-const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
+import { useRouter } from "next/router";
+
+import { MatchPartnerProps } from "@/interfaces/partner";
+
+import axios from "axios";
+
+const Match = () => {
+  const router = useRouter();
+
+  const [partners, setPartners] = useState<MatchPartnerProps[]>([]);
+
+  //최초 화면 컴포넌트 렌더링(마운팅)시점에 로컬스토리지내 토큰값 존재여부 체크후
+  //1.토큰이 없으면 로그인 하고 오시라고 페이지 리디렉션처리하기
+  //2.토큰이 있으면 상대목록 데이터 호출하기
+  useEffect(() => {
+    //서버 인증 JWT 사용자 인증토큰이 스토리지에 없으면 로그인하고 오시라고 처리
+    if (localStorage.getItem("token") == undefined) {
+      router.push("/login");
+    } else {
+      getPartnerList();
+    }
+  }, []);
+
+  const token = localStorage.getItem("token");
+
+  //비동기 방식으로 백엔드 게시글 목록 데이터 호출함수
+  async function getPartnerList() {
+    try {
+      const res = await axios.get(
+        "http://localhost:5005/api/channel/partnerlist",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (res.data.code == 200) {
+        setPartners(res.data.data);
+      } else {
+        console.error("서버 에러발생...", res.data.msg);
+      }
+    } catch (err) {
+      console.error("백엔드 API 호출에러발생...");
+    }
+  }
+
   return (
-    <div
-      className={`w-full bg-white max-w-full flex flex-col items-start justify-start leading-[normal] tracking-[normal] ${className}`}
-    >
-      <main className="self-stretch bg-gray-200 flex flex-col items-start justify-start min-h-[800px] max-w-full">
+    <div className="w-full bg-custom-dark-blue max-w-full flex flex-col items-start justify-start leading-[normal] tracking-[normal]">
+      <main className="self-stretch  flex flex-col items-start justify-start min-h-[800px] max-w-full">
         <section className="self-stretch flex flex-col items-start justify-start max-w-full text-left text-[32px] text-white font-plus-jakarta-sans">
+          {/* header 영역 */}
           <header className="self-stretch border-gainsboro border-b-[1px] border-solid box-border flex flex-row items-center justify-between pt-3 px-10 pb-[11px] top-[0] z-[99] sticky max-w-full gap-0 [row-gap:20px] text-left text-lg text-white font-plus-jakarta-sans">
             <div className="flex flex-row items-center justify-start gap-4">
               <div className="flex flex-col items-start justify-start">
@@ -20,14 +60,14 @@ const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
                     className="absolute top-[0px] left-[0px] w-full h-full"
                     loading="lazy"
                     alt=""
-                    src="/vector-0.svg"
+                    src="/applogo.svg"
                   />
                   <div className="absolute top-[0px] left-[0px] w-[13px] h-[13px]" />
                 </div>
               </div>
               <div className="flex flex-col items-start justify-start">
                 <a className="[text-decoration:none] relative leading-[23px] font-bold text-[inherit] inline-block min-w-[73px] whitespace-nowrap">
-                  Campus
+                  Midnight
                 </a>
               </div>
             </div>
@@ -51,7 +91,7 @@ const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
                       <img
                         className="absolute top-[0px] left-[0px] w-full h-full"
                         alt=""
-                        src="/vector--0-1.svg"
+                        src="/match/notice.svg"
                       />
                       <div className="absolute top-[0px] left-[0px] w-[15px] h-4" />
                     </div>
@@ -63,7 +103,7 @@ const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
                       <img
                         className="absolute top-[0px] left-[0px] w-full h-full"
                         alt=""
-                        src="/vector--0-2.svg"
+                        src="/match/reset.svg"
                       />
                       <div className="absolute top-[0px] left-[0px] w-4 h-[15px]" />
                     </div>
@@ -74,12 +114,15 @@ const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
                 className="h-10 w-10 relative rounded-xl overflow-hidden shrink-0 object-cover min-h-[40px]"
                 loading="lazy"
                 alt=""
-                src="/depth-4-frame-2@2x.png"
+                src="/smallprofile.svg"
               />
             </div>
           </header>
+
+          {/* content 영역 */}
           <div className="self-stretch flex flex-row items-start justify-center pt-5 px-40 pb-[22px] box-border max-w-full mq450:pl-5 mq450:pr-5 mq450:box-border mq700:pl-20 mq700:pr-20 mq700:box-border">
             <div className="flex-1 overflow-hidden flex flex-col items-start justify-start max-w-[960px] mq975:max-w-full">
+              {/* Today's matches 영역 */}
               <div className="self-stretch flex flex-row flex-wrap items-start justify-start py-4 pl-4 pr-[399px] gap-3 mq450:pr-5 mq450:box-border mq700:pr-[199px] mq700:box-border">
                 <div className="w-72 flex flex-col items-start justify-start gap-3 min-w-[288px]">
                   <div className="self-stretch flex flex-col items-start justify-start">
@@ -94,32 +137,16 @@ const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
                   </div>
                 </div>
               </div>
-              <Depth4Frame
-                depth6Frame0="/depth-6-frame-0@2x.png"
-                hannah20="Hannah, 20"
-                mathematics="Mathematics"
-              />
-              <Depth4Frame
-                depth6Frame0="/depth-6-frame-0-1@2x.png"
-                hannah20="Jenna, 21"
-                mathematics="Physics"
-                propMinWidth="58px"
-                propDisplay="inline-block"
-              />
-              <Depth4Frame
-                depth6Frame0="/depth-6-frame-0-2@2x.png"
-                hannah20="Lucas, 22"
-                mathematics="Computer Science"
-                propMinWidth="unset"
-                propDisplay="unset"
-              />
-              <Depth4Frame
-                depth6Frame0="/depth-6-frame-0-3@2x.png"
-                hannah20="Sarah, 23"
-                mathematics="Biology"
-                propMinWidth="59px"
-                propDisplay="inline-block"
-              />
+
+              {/* 채팅 상대 목록- 자식 컴포넌트를 이용해서 map 함수로 돌릴 것임 */}
+              {partners.map((partner) => (
+                <MatchPartner
+                  key={partner.member_id}
+                  name={partner.name}
+                  department={partner.department}
+                  partner={partner}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -128,4 +155,4 @@ const GalileoDesign: NextPage<GalileoDesignType> = ({ className = "" }) => {
   );
 };
 
-export default GalileoDesign;
+export default Match;
